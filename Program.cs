@@ -28,7 +28,9 @@ public class ArrayListCRUD
 {
     public static void Main()
     {
+        // creates variable running of typle bool and sets equal to true
         bool running = true;
+        // creates the variable users and sets it equal to a new instance of Dictionary
         var users = new Dictionary<string, User>();
 
         Console.WriteLine("Welcome to you user database! \n");
@@ -38,7 +40,8 @@ public class ArrayListCRUD
         {
             Console.WriteLine("[ C - Create | R - Read | U - Update | D - Delete | P - Print | Q - Quit ]");
             Console.Write("Input: ");
-
+            
+            //takes in user input via Console.ReadLine() and calls the appropiate method based on the valid case
             switch (Console.ReadLine())
             {
                 case "C":
@@ -68,12 +71,12 @@ public class ArrayListCRUD
 
                 case "Q":
                 case "q":
-                    running = false;
+                    running = false; // assigns false value to the running variable and effectively exiting the 'do-while' loop
                     break;
             }
         } while (running);
     }
-
+    // Defining CreateUser method
     static void CreateUser(IDictionary<string, User> users)
     {
         Console.Write("Please enter an ID: ");
@@ -83,7 +86,7 @@ public class ArrayListCRUD
         {
             userID = Console.ReadLine();
 
-            if (users.ContainsKey(userID))
+            if (users.ContainsKey(userID))//verify if userID already exists
             {
                 Console.WriteLine("\nA user with this ID already exists, please try again.\n");
             }
@@ -95,11 +98,11 @@ public class ArrayListCRUD
         string suffix = Console.ReadLine();
 
 
-        var user = new User(prefix, suffix, userID);
+        var user = new User(prefix, suffix, userID);//new instance of User object
         users.Add(userID, user);
         Console.WriteLine("\n" + user + "\n");
     }
-
+    //Defining ReadUser method
     static void ReadUser(IDictionary<string, User> users)
     {
         Console.Write("Please enter the user's ID: ");
@@ -114,7 +117,7 @@ public class ArrayListCRUD
             Console.WriteLine("\n ***No such user*** \n");
         }
     }
-
+    //Defining UpdateUser method
     static void UpdateUser(IDictionary<string, User> users)
     {
         Console.Write("Please enter the user's ID: ");
@@ -122,13 +125,13 @@ public class ArrayListCRUD
 
         if (users.ContainsKey(userID))
         {
+            //'Updates' by showing requested userID, removing it and creating a new record
             Console.WriteLine("\nCurrent information: " + users[userID]);
-            users.Remove(userID);
+            users.Remove(userID); 
             CreateUser(users);
-            
         }
     }
-
+    //Defining DeleteUser method
     static void DeleteUser(IDictionary<string, User> users)
     {
         Console.Write("Please enter the user's ID: ");
@@ -137,10 +140,10 @@ public class ArrayListCRUD
 
         if (!users.Remove(userID)) Console.WriteLine("***No such user*** \n");
     }
-
+    //Defining PrintAll method
     static void PrintAll(IDictionary<string, User> users)
     {
-        if (users.Any())
+        if (users.Any())//if there are records in the Dictionary, loops over them to print each one using foreach loop
         {
             foreach (var user in users.Values.OrderBy(value => value.UserID))
             {
